@@ -1,8 +1,30 @@
+console.log('Starting server...');
+
+console.log('Loading express...');
 const express = require('express');
-const app = express();
+console.log('Express loaded successfully.');
+
+const app = express(); // Define the app here
+console.log('Express app initialized.');
+
+console.log('Loading path...');
 const path = require('path');
+console.log('Path loaded successfully.');
+
+console.log('Loading dotenv...');
 require('dotenv').config();
+console.log('Dotenv loaded successfully.');
+
+console.log('Loading body-parser...');
 const bodyParser = require('body-parser');
+console.log('Body-parser loaded successfully.');
+
+console.log('Loading cors...');
+const cors = require('cors');
+console.log('CORS loaded successfully.');
+
+// Enable CORS for all routes
+app.use(cors());
 
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
@@ -58,77 +80,48 @@ const disneyResponses = {
   ]
 };
 
-// DisneyBot API route
+console.log('Defining POST /api/disneybot route...');
 app.post('/api/disneybot', (req, res) => {
-  console.log('Received message:', req.body);
-  const userMessage = req.body.message || '';
-  const userCharacter = req.body.character || null;
-  
-  try {
-    // Generate response based on user input
-    let botReply = '';
-    
-    // Check for character-specific mentions
-    const characters = ['Simba', 'Belle', 'Ariel', 'Tiana', 'Mickey Mouse'];
-    let characterDetected = userCharacter;
-    
-    // If no character provided, try to detect from message
-    if (!characterDetected) {
-      for (const character of characters) {
-        if (userMessage.toLowerCase().includes(character.toLowerCase())) {
-          characterDetected = character;
-          break;
+    try {
+        console.log('Request received at /api/disneybot');
+        console.log('Request method:', req.method);
+        console.log('Request headers:', req.headers);
+        console.log('Request body:', req.body);
+
+        if (!req.body || !req.body.message) {
+            console.error('Invalid request body:', req.body);
+            return res.status(400).json({ reply: 'Invalid request. Please include a message.' });
         }
-      }
+
+        const userMessage = req.body.message;
+        const character = req.body.character;
+
+        console.log('User message:', userMessage);
+        console.log('Character received:', character);
+
+        // Log available keys in disneyResponses
+        console.log('Available characters:', Object.keys(disneyResponses));
+
+        let botReply;
+
+        if (character && disneyResponses[character]) {
+            console.log(`Character "${character}" found. Selecting a response.`);
+            const responses = disneyResponses[character];
+            botReply = responses[Math.floor(Math.random() * responses.length)];
+        } else {
+            console.warn(`Character "${character}" not found. Falling back to generic responses.`);
+            const genericResponses = disneyResponses.general;
+            botReply = genericResponses[Math.floor(Math.random() * genericResponses.length)];
+        }
+
+        console.log('Sending response:', botReply);
+        res.json({ reply: botReply });
+    } catch (error) {
+        console.error('Error in /api/disneybot route:', error);
+        res.status(500).json({ reply: 'Internal Server Error. Please try again later.' });
     }
-    
-    // Detect common questions or keywords
-    if (userMessage.toLowerCase().includes('who are you')) {
-      botReply = "I'm DisneyBot, a magical helper who loves to chat about all things Disney!";
-    } 
-    else if (userMessage.toLowerCase().includes('favorite movie')) {
-      botReply = "That's a tough one! So many classics to choose from. What's your favorite Disney movie?";
-    }
-    else if (userMessage.toLowerCase().includes('favorite character')) {
-      botReply = "I love all Disney characters! Each one has their own special magic. Who's your favorite?";
-    }
-    else if (userMessage.toLowerCase().includes('tell me about')) {
-      // Extract what they want to know about
-      const aboutIndex = userMessage.toLowerCase().indexOf('tell me about');
-      const subject = userMessage.slice(aboutIndex + 'tell me about'.length).trim();
-      
-      switch(subject.toLowerCase()) {
-        case 'disney world':
-        case 'disneyworld':
-          botReply = "Disney World in Florida is the most magical place on Earth with four amazing theme parks: Magic Kingdom, Epcot, Hollywood Studios, and Animal Kingdom!";
-          break;
-        case 'disneyland':
-          botReply = "Disneyland in California is where the Disney park magic began in 1955! It's Walt Disney's original dream come true.";
-          break;
-        default:
-          botReply = `I'd love to tell you more about ${subject}! What would you like to know specifically?`;
-      }
-    }
-    // Character-specific responses if we detected a character
-    else if (characterDetected && disneyResponses[characterDetected]) {
-      const responses = disneyResponses[characterDetected];
-      botReply = responses[Math.floor(Math.random() * responses.length)];
-    }
-    // Default to a general Disney response
-    else {
-      const generalResponses = disneyResponses.general;
-      botReply = generalResponses[Math.floor(Math.random() * generalResponses.length)];
-    }
-    
-    console.log('Sending response:', botReply);
-    // Send the response
-    res.json({ reply: botReply });
-    
-  } catch (error) {
-    console.error('Error with DisneyBot:', error);
-    res.status(500).json({ reply: 'Sorry, I am having trouble responding right now.' });
-  }
 });
+console.log('POST /api/disneybot route defined successfully.');
 
 // Also add a GET endpoint for testing
 app.get('/api/disneybot', (req, res) => {
