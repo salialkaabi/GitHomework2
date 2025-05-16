@@ -4,14 +4,17 @@ const path = require('path');
 require('dotenv').config();
 const bodyParser = require('body-parser');
 
+// Debug log to print all environment variables
+console.log('Environment Variables:', process.env);
+
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Middleware to parse JSON requests
 app.use(bodyParser.json());
 
-// Example usage of the API key
-const apiKey = process.env.API_KEY;
+// Update to use the correct environment variable name
+const apiKey = process.env.OPENAI_API_KEY;
 console.log(`Your API key is: ${apiKey}`);
 
 // Route for the home page
