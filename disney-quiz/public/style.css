@@ -1,29 +1,184 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
     text-align: center;
-    background-color: #f0f8ff;
+    background-color: #e6f3ff;
     margin: 0;
     padding: 0;
+    color: #333;
+    background-image: radial-gradient(#fff 10%, transparent 11%), 
+                      radial-gradient(#fff 10%, transparent 11%);
+    background-size: 60px 60px;
+    background-position: 0 0, 30px 30px;
 }
 
 .container {
-    margin-top: 20%;
+    margin: 10% auto;
+    max-width: 600px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
-    color: #ff4500;
+    color: #1e90ff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    font-size: 2.2em;
+}
+
+h2 {
+    color: #ff6347;
+    margin-bottom: 20px;
 }
 
 button {
-    background-color: #ff4500;
+    background-color: #1e90ff;
     color: white;
     border: none;
-    padding: 10px 20px;
+    padding: 12px 24px;
     font-size: 16px;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-weight: bold;
 }
 
 button:hover {
-    background-color: #ff6347;
+    background-color: #4169e1;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+#quiz-container, #chat-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.question {
+    margin-bottom: 20px;
+    text-align: left;
+    background-color: #f0f8ff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.question p {
+    font-weight: bold;
+    color: #4169e1;
+    margin-top: 0;
+}
+
+label {
+    display: block;
+    margin: 10px 0;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+label:hover {
+    background-color: #e6e6fa;
+}
+
+input[type="radio"] {
+    margin-right: 10px;
+}
+
+#chat-container {
+    text-align: left;
+}
+
+#chat-box {
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+}
+
+#messages {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 10px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    max-height: 300px;
+}
+
+.user-message, .bot-message {
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 20px;
+    max-width: 80%;
+}
+
+.user-message {
+    background-color: #1e90ff;
+    color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 5px;
+}
+
+.bot-message {
+    background-color: #e6e6fa;
+    color: #333;
+    align-self: flex-start;
+    border-bottom-left-radius: 5px;
+}
+
+#chat-input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 20px;
+    margin-right: 10px;
+    font-size: 14px;
+}
+
+#chat-input:focus {
+    outline: none;
+    border-color: #1e90ff;
+}
+
+#send-message {
+    padding: 10px 20px;
+}
+
+/* Disney character color themes based on result */
+.theme-simba {
+    background-color: #ffcc66;
+}
+
+.theme-belle {
+    background-color: #f0e68c;
+}
+
+.theme-ariel {
+    background-color: #b0e0e6;
+}
+
+.theme-tiana {
+    background-color: #98fb98;
+}
+
+.theme-mickey {
+    background-color: #ffb6c1;
+}
+
+/* Chat input container */
+.chat-controls {
+    display: flex;
+    margin-top: 10px;
 }
