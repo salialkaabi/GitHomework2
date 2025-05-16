@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disney Character Quiz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to the Disney Character Quiz!</h1>
+        <p>Find out which Disney character you are!</p>
+        <button id="start-quiz">Take the Quiz</button>
+    </div>
+    <div id="quiz-container" style="display: none;">
+        <h2>Quiz</h2>
+        <form id="quiz-form">
+            <div class="question">
+                <p>1. What is your favorite color?</p>
+                <label><input type="radio" name="q1" value="red"> Red</label>
+                <label><input type="radio" name="q1" value="blue"> Blue</label>
+                <label><input type="radio" name="q1" value="green"> Green</label>
+                <label><input type="radio" name="q1" value="yellow"> Yellow</label>
+            </div>
+            <div class="question">
+                <p>2. What is your favorite activity?</p>
+                <label><input type="radio" name="q2" value="adventure"> Adventure</label>
+                <label><input type="radio" name="q2" value="reading"> Reading</label>
+                <label><input type="radio" name="q2" value="singing"> Singing</label>
+                <label><input type="radio" name="q2" value="cooking"> Cooking</label>
+            </div>
+            <div class="question">
+                <p>3. What is your ideal pet?</p>
+                <label><input type="radio" name="q3" value="dog"> Dog</label>
+                <label><input type="radio" name="q3" value="cat"> Cat</label>
+                <label><input type="radio" name="q3" value="bird"> Bird</label>
+                <label><input type="radio" name="q3" value="fish"> Fish</label>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <div id="chat-container" style="display: none;">
+        <h2>DisneyBot</h2>
+        <p>Share your results and chat with DisneyBot!</p>
+        <div id="chat-box">
+            <div id="messages"></div>
+            <input type="text" id="chat-input" placeholder="Type a message...">
+            <button id="send-message">Send</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
