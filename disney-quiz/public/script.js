@@ -52,9 +52,6 @@ document.getElementById('quiz-form').addEventListener('submit', (event) => {
     userMessage.textContent = `I got ${userCharacter}!`;
     userMessage.className = 'user-message';
     messages.appendChild(userMessage);
-    
-    // Automatically send the first message to DisneyBot
-    sendMessageToDisneyBot(`I got ${userCharacter}!`);
 });
 
 // Extract the sending functionality to a separate function so we can reuse it
@@ -63,6 +60,7 @@ async function sendMessageToDisneyBot(message) {
     
     // Call the DisneyBot API
     try {
+        console.log('Sending to DisneyBot:', message, 'Character:', userCharacter);
         const response = await fetch('/api/disneybot', {
             method: 'POST',
             headers: {
@@ -70,11 +68,18 @@ async function sendMessageToDisneyBot(message) {
             },
             body: JSON.stringify({ 
                 message: message,
-                character: userCharacter  // Send the user's character to help with contextual responses
+                character: userCharacter
             }),
         });
 
+        console.log('Response status:', response.status);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        
         const data = await response.json();
+        console.log('Response data:', data);
 
         const botMessage = document.createElement('div');
         botMessage.textContent = `DisneyBot: ${data.reply}`;
@@ -86,7 +91,7 @@ async function sendMessageToDisneyBot(message) {
     } catch (error) {
         console.error('Error communicating with DisneyBot:', error);
         const errorMessage = document.createElement('div');
-        errorMessage.textContent = 'DisneyBot: Sorry, something went wrong!';
+        errorMessage.textContent = 'DisneyBot: Sorry, something went wrong! Please try again later.';
         errorMessage.className = 'bot-message';
         messages.appendChild(errorMessage);
     }

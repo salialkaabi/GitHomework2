@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// DisneyBot implementation
+// DisneyBot response templates
 const disneyResponses = {
   // Character-specific responses
   Simba: [
@@ -59,8 +59,9 @@ const disneyResponses = {
 };
 
 // DisneyBot API route
-app.post('/api/disneybot', async (req, res) => {
-  const userMessage = req.body.message;
+app.post('/api/disneybot', (req, res) => {
+  console.log('Received message:', req.body);
+  const userMessage = req.body.message || '';
   const userCharacter = req.body.character || null;
   
   try {
@@ -119,6 +120,7 @@ app.post('/api/disneybot', async (req, res) => {
       botReply = generalResponses[Math.floor(Math.random() * generalResponses.length)];
     }
     
+    console.log('Sending response:', botReply);
     // Send the response
     res.json({ reply: botReply });
     
@@ -128,8 +130,14 @@ app.post('/api/disneybot', async (req, res) => {
   }
 });
 
+// Also add a GET endpoint for testing
+app.get('/api/disneybot', (req, res) => {
+  res.json({ reply: "I'm DisneyBot! Send me a POST request to chat with me." });
+});
+
 // Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+
